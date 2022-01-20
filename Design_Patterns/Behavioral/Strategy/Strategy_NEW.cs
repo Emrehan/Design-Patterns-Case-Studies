@@ -25,6 +25,7 @@ namespace Design_Patterns.Behavioral.Strategy.New
 
     }
 
+    #region USEREXIST
     interface IIuserExistBehavior
     {
         bool IsUserExist(string key);
@@ -34,12 +35,16 @@ namespace Design_Patterns.Behavioral.Strategy.New
     {
         public bool IsUserExist(string key) => FakeData.Usernames.Contains(key);
     }
-    
+
     public class IsUserExistNoCheck : IIuserExistBehavior
     {
         public bool IsUserExist(string key) => true;
     }
+    #endregion
 
+
+
+    #region PASSWORDCORRECT
     interface IIsPasswordCorrect
     {
         bool IsPasswordCorrect(string password);
@@ -53,10 +58,12 @@ namespace Design_Patterns.Behavioral.Strategy.New
     public class IsPasswordCorrectRemote : IIsPasswordCorrect
     {
         public bool IsPasswordCorrect(string password) => FakeFunction.Verify(password);
-    }
+    } 
+    #endregion
 
     class PasswordLogin : LoginBehavior
     {
+        //PasswordLogin spesific fields
         private int PasswordLoginFields1;
         private int PasswordLoginFields2;
         private int PasswordLoginFields3;
@@ -71,6 +78,8 @@ namespace Design_Patterns.Behavioral.Strategy.New
 
     class GoogleLogin : LoginBehavior
     {
+        //GoogleLogin spesific fields
+        private const string uri = "google.com";
         public GoogleLogin(IIuserExistBehavior isUserExist, IIsPasswordCorrect isPasswordCorrect) 
             : base(LOGIN_TYPES.GOOGLE, isUserExist, isPasswordCorrect)
         {
