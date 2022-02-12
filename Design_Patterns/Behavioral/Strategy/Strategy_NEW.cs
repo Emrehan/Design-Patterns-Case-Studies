@@ -42,8 +42,6 @@ namespace Design_Patterns.Behavioral.Strategy.New
     }
     #endregion
 
-
-
     #region PASSWORDCORRECT
     interface IIsPasswordCorrect
     {
@@ -86,18 +84,30 @@ namespace Design_Patterns.Behavioral.Strategy.New
         }
     }
 
+    class BasicLogin : LoginBehavior
+    {
+        public BasicLogin(LOGIN_TYPES login_type, IIuserExistBehavior isUserExist, IIsPasswordCorrect isPasswordCorrect) 
+            : base(login_type, isUserExist, isPasswordCorrect)
+        {
+        }
+    }
+
     class Strategy_NEW
     {
         public static void Main()
         {
             LoginBehavior passwordLogin = new PasswordLogin (                      new IsUserExistServer() , new IsPasswordCorrectServer(), 1, 2);
             LoginBehavior googleLogin   = new GoogleLogin   (                      new IsUserExistNoCheck(), new IsPasswordCorrectRemote()      );
-            LoginBehavior facebookLogin = new LoginBehavior (LOGIN_TYPES.FACEBOOK, new IsUserExistNoCheck(), new IsPasswordCorrectRemote()      );
+            LoginBehavior facebookLogin = new BasicLogin    (LOGIN_TYPES.FACEBOOK, new IsUserExistNoCheck(), new IsPasswordCorrectRemote()      );
 
             var login = passwordLogin;
             if (login.IsUserExist("Emrehan") && login.IsPasswordCorrect("123"))
             {
-
+                //LOGIN SUCCESS
+            }
+            else
+            {
+                //LOGIN FAILED
             }
         }
     }
